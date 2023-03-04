@@ -16,9 +16,8 @@
             "name": "ts-run",
             "type": "node",
             "request": "launch",
-            "program": "${relativeFile}",
-            "cwd": "${workspaceFolder}",
-            "autoAttachChildProcesses": true,
+            "runtimeArgs": ["-r", "ts-node/register"],
+            "args": ["${relativeFile}"],
             "console": "integratedTerminal",
           }
     ]
