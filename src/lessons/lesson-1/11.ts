@@ -1,10 +1,18 @@
-function calc(x: number, y: number, fn: (x: number, y: number) => number): number {
+type CalcFunctions = (x: number, y: number) => number
+function calc(x: number, y: number, fn: CalcFunctions): number {
     return fn(x, y)
 }
-const sum = calc(3, 7, (x, y) => x + y)
-const diff = calc(3, 7, (x, y) => x - y)
-const mul = calc(3, 7, (x, y) => x * y)
-const div = calc(3, 7, (x, y) => x / y)
-const array = [sum, diff, mul, div]
-for (const result of array)
-    console.log(result)
+const sum2: CalcFunctions = (x: number, y: number): number => x + y
+const diff2: CalcFunctions = (x: number, y: number): number => x - y
+const mul2: CalcFunctions = (x: number, y: number): number => x * y
+const div2: CalcFunctions = (x: number, y: number): number => {
+    if (y === 0) {
+        throw new Error('Делитель не может быть равен нулю')
+    }
+    return x / y
+}
+
+const array: CalcFunctions[] = [sum2, diff2, mul2, div2]
+for (const result of array) {
+    console.log(calc(4, 0, result))
+}

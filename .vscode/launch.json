@@ -1,24 +1,23 @@
 {
-    "version": "0.2.0",
-    "configurations": [
-    
+  "version": "0.2.0",
+  "configurations": [
+      {
+          "name": "local - chrome",
+          "type": "node",
+          "request": "launch",
+          "args": ["src/wdio.conf.ts", "--spec", "${relativeFile}"],
+          "cwd": "${workspaceFolder}",
+          "autoAttachChildProcesses": true,
+          "program": "${workspaceRoot}/node_modules/@wdio/cli/bin/wdio.js",
+          "console": "integratedTerminal",
+        },
         {
-            "name": "local - chrome",
-            "type": "node",
-            "request": "launch",
-            "args": ["src/wdio.conf.ts", "--spec", "${relativeFile}"],
-            "cwd": "${workspaceFolder}",
-            "autoAttachChildProcesses": true,
-            "program": "${workspaceRoot}/node_modules/@wdio/cli/bin/wdio.js",
-            "console": "integratedTerminal",
-          },
-          {
-            "name": "ts-run",
-            "type": "node",
-            "request": "launch",
-            "runtimeArgs": ["-r", "ts-node/register"],
-            "args": ["${relativeFile}"],
-            "console": "integratedTerminal",
-          }
-    ]
+          "name": "ts-run",
+          "type": "node",
+          "request": "launch",
+          "runtimeArgs": ["-r", "ts-node/register"],
+          "args": ["${relativeFile}"],
+          "console": "integratedTerminal",
+        }
+  ]
 } 
