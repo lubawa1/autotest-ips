@@ -1,23 +1,21 @@
 class Car {
-    state: string
+    private state: string = 'off'
 
-    constructor(state: string) {
-        this.state = state
-    }
-
-    tunrOn() {
+    public tunrOn() {
         this.state = 'on'
     }
-    turnOff() {
+
+    public turnOff() {
         this.state = 'off'
     }
 
-    getState() {
-        console.log(this.state)
+    public getState() {
+        console.log('State car is', this.state)
     }
 }
 
-const car: Car = new Car('off')
+const car: Car = new Car()
+
 car.getState()
 car.tunrOn()
 car.getState()
