@@ -1,4 +1,4 @@
-import { LOGIN, PASSWORD } from "../../credentials"
+import { EMAIL, LOGIN, PASSWORD } from "../../credentials"
 
 describe('Login form test', async () => {
     beforeEach(async () => {
@@ -60,5 +60,24 @@ describe('Login form test', async () => {
 
     afterEach(async () => {
         await browser.reloadSession()
+    })
+
+    it('user should be log in with email', async () => {
+        await browser.$('//*[@id="login_field"]').waitForDisplayed({
+            timeoutMsg: 'Login field was not displayed'
+        })
+        await browser.$('//*[@id="login_field"]').setValue(EMAIL)
+        await browser.$('//*[@id="password"]').setValue(PASSWORD)
+        await browser.$('//*[@type="submit"]').waitForClickable({
+            timeoutMsg: 'Login button was not clicable'
+        })
+        await browser.$('//*[@type="submit"]').click()
+
+        await browser.$('//summary//*[contains(@class, "avatar")]').waitForDisplayed({
+            timeoutMsg: 'Avatar was not displayed'
+        })
+        await browser.$('//summary//*[contains(@class, "avatar")]').click()
+
+        expect(await browser.$('//*[@class="css-truncate-target"]').getText()).toEqual(LOGIN)
     })
     })
