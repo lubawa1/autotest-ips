@@ -38,7 +38,7 @@ describe('Login form test', async () => {
         await browser.$('//*[@id="js-flash-container"]').waitForDisplayed({
             timeoutMsg: 'Login field was correct'
         })
-        expect(await browser.$('//*[@id="js-flash-container"]'))
+        expect(await browser.$('//*[@id="js-flash-container"]').isDisplayed()).toEqual(true)
     })
 
     it('user should not be log in with incorrect password', async () => {
@@ -55,11 +55,7 @@ describe('Login form test', async () => {
         await browser.$('//*[@id="js-flash-container"]').waitForDisplayed({
             timeoutMsg: 'Password field was correct'
         })
-        expect(await browser.$('//*[@id="js-flash-container"]'))
-    })
-
-    afterEach(async () => {
-        await browser.reloadSession()
+        expect(await browser.$('//*[@id="js-flash-container"]').isDisplayed()).toEqual(true)
     })
 
     it('user should be log in with email', async () => {
@@ -80,4 +76,8 @@ describe('Login form test', async () => {
 
         expect(await browser.$('//*[@class="css-truncate-target"]').getText()).toEqual(LOGIN)
     })
+    
+    afterEach(async () => {
+        await browser.reloadSession()
     })
+})
