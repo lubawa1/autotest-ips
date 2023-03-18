@@ -32,8 +32,8 @@ class SettingsPage {
         await this.getUsernameField().clearValue()
         await this.getUsernameField().setValue(username)
         await this.getUpdateProfileButton().waitForClickable({
-        timeoutMsg: 'Update button was not clicable'
-    })
+            timeoutMsg: 'Update button was not clicable'
+        })
     }
 
     public async getUpdateBio(username: string): Promise<void> {
@@ -41,8 +41,8 @@ class SettingsPage {
             timeoutMsg: 'Username field was not displayed'
         })
         await this.getUpdateUsernameField().waitForClickable({
-        timeoutMsg: 'Username was not clicable'
-    })
+            timeoutMsg: 'Username was not clicable'
+        })
         await this.getUpdateUsernameField().click()
     }
 
@@ -53,8 +53,8 @@ class SettingsPage {
         await this.getBioField().clearValue()
         await this.getBioField().setValue(otherProfile)
         await this.getUpdateProfileButton().waitForClickable({
-        timeoutMsg: 'Update button was not clicable'
-    })
+            timeoutMsg: 'Update button was not clicable'
+        })
     }
 
     public async updateProfile(): Promise<void> {
@@ -73,7 +73,7 @@ class SettingsPage {
     }
 
     private getUpdateBanner(): ChainablePromiseElement<WebdriverIO.Element> {
-        return this.browser.$('//main//*[contains(@class,"flash-full")]') 
+        return this.browser.$('//main//*[contains(@class,"flash-full")]')
     }
 
     private getUsernameField(): ChainablePromiseElement<WebdriverIO.Element> {

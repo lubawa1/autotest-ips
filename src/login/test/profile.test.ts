@@ -1,7 +1,7 @@
 import { LoginPage } from '../page-object/Login.page'
 import { LOGIN, PASSWORD } from '../../../credentials'
 import { MainPage } from '../page-object/Main.page'
-import { SettingsPage} from '../page-object/Settings.page'
+import { SettingsPage } from '../page-object/Settings.page'
 import { UserPage } from '../page-object/User.page'
 import { OtherUserPage } from '../page-object/OtherUser.page'
 

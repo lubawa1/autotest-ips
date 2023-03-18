@@ -12,7 +12,7 @@ class OtherUserPage {
         await this.browser.url(this.url)
     }
 
-   // public isDisplayedOtherUserName(): Promise<boolean>
+    // public isDisplayedOtherUserName(): Promise<boolean>
 
     public async isDisplayedOtherUserName(): Promise<void> {
         await this.getName().waitForDisplayed({

@@ -26,13 +26,13 @@ class UserPage {
     //     })
     //     await this.getBio().click()
     // }
-    
+
 
     public async clickableBioLink(): Promise<void> {
         await this.getBioLink().waitForClickable({
             timeoutMsg: 'User button in bio was not clicable'
         })
-             await this.getBioLink().click()
+        await this.getBioLink().click()
     }
 
     private getBio(): ChainablePromiseElement<WebdriverIO.Element> {
