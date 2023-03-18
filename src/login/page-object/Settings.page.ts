@@ -64,6 +64,24 @@ class SettingsPage {
         await this.getUpdateProfileButton().click()
     }
 
+    public async changePronouns(): Promise<void> {
+        await this.getPronounsList().waitForDisplayed({
+            timeoutMsg: 'Pronouns field was not displayed'
+        })
+        await this.getPronounsList().waitForClickable({
+            timeoutMsg: 'Pronouns was not clicable'
+        })
+        await this.getPronounsList().click()
+        await this.getPronounsValueShe().waitForDisplayed({
+            timeoutMsg: 'Pronouns `she` field was not displayed'
+        })
+        await this.getPronounsValueShe().click()
+        await this.getUpdateProfileButton().waitForClickable({
+            timeoutMsg: 'Update button was not clicable'
+        }) 
+        await this.getUpdateProfileButton().click()       
+    }
+
     private getBioField(): ChainablePromiseElement<WebdriverIO.Element> {
         return this.browser.$('//*[@id="user_profile_bio"]')
     }
@@ -86,6 +104,14 @@ class SettingsPage {
 
     private getUpdateProfileButton(): ChainablePromiseElement<WebdriverIO.Element> {
         return this.browser.$('//waiting-form//*[contains(@class,"Button--primary")]')
+    }
+
+    private getPronounsList(): ChainablePromiseElement<WebdriverIO.Element> {
+        return this.browser.$('//*[@id="user_profile_pronouns_select"]')
+    }
+
+    private getPronounsValueShe(): ChainablePromiseElement<WebdriverIO.Element> {
+        return this.browser.$('//select//*[contains(@value,"she/her")]')
     }
 
 }

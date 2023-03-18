@@ -18,15 +18,14 @@ describe('Login form test', () => {
         settingsPage = new SettingsPage(browser)
         userPage = new UserPage(browser)
         otherUserPage = new OtherUserPage(browser)
+    })
+
+    beforeEach(async () => {
 
         await loginPage.open()
         await loginPage.login(LOGIN, PASSWORD)
         await mainPage.openUserMenu()
         await mainPage.openSettingsProfile()
-    })
-
-    beforeEach(async () => {
-
         await settingsPage.openSettings()
 
         expect(await settingsPage.isDisplayedPublicProfileLayout()).toEqual(true)
@@ -57,5 +56,17 @@ describe('Login form test', () => {
         expect(await otherUserPage.getNameText()).toEqual('KonstantinPrik')
     })
 
+    it('Pronouns should be change to `she/her`', async () => {
+        await settingsPage.changePronouns()
+        await settingsPage.updateProfile()
+
+        expect(await settingsPage.isDisplayedUpdateBanner()).toEqual(true)
+        await userPage.openUser()
+        expect(await userPage.getPronounsText()).toEqual('she/her')
+    })
+
+    afterEach(async () => {
+        await browser.reloadSession()
+    })
 
 })

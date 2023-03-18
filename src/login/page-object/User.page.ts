@@ -20,6 +20,10 @@ class UserPage {
         return this.getBio().getText()
     }
 
+    public getPronounsText(): Promise<string> {
+        return this.getPronouns().getText()
+    }
+
     // public async clickBio(): Promise<void> {
     //     await this.getBio().waitForClickable({
     //         timeoutMsg: 'Bio button was not clicable'
@@ -41,6 +45,10 @@ class UserPage {
 
     private getBioLink(): ChainablePromiseElement<WebdriverIO.Element> {
         return this.browser.$('//div//*[contains(@href,"KonstantinPrik")]')
+    }
+
+    private getPronouns(): ChainablePromiseElement<WebdriverIO.Element> {
+        return this.browser.$('//div//*[contains(@itemprop,"pronouns")]')
     }
 
 }
