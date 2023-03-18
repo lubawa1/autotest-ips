@@ -23,6 +23,17 @@ class MainPage {
         await this.getUserAvatar().click()
     }
 
+    public async openSettingsProfile(): Promise<void> {
+        await this.getSettingsButton().waitForClickable({
+            timeoutMsg: 'Settings button was not clicable'
+        })
+        await this.getSettingsButton().click()
+    }
+
+    private getSettingsButton(): ChainablePromiseElement<WebdriverIO.Element> {
+        return this.browser.$('//details-menu//*[contains(@href,"settings/profile")]')
+    }
+
     private getUserAvatar(): ChainablePromiseElement<WebdriverIO.Element> {
         return this.browser.$('//summary//*[contains(@class, "avatar")]')
     }
