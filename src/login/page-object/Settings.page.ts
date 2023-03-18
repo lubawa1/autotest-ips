@@ -12,6 +12,7 @@ class SettingsPage {
         await this.browser.url(this.url)
     }
 
+
     public getUpdateUsernameText(): Promise<string> {
         return this.getUpdateUsernameField().getText()
     }
@@ -35,11 +36,36 @@ class SettingsPage {
     })
     }
 
+    public async getUpdateBio(username: string): Promise<void> {
+        await this.getUsernameField().waitForDisplayed({
+            timeoutMsg: 'Username field was not displayed'
+        })
+        await this.getUpdateUsernameField().waitForClickable({
+        timeoutMsg: 'Username was not clicable'
+    })
+        await this.getUpdateUsernameField().click()
+    }
+
+    public async addOtherProfile(otherProfile: string): Promise<void> {
+        await this.getBioField().waitForDisplayed({
+            timeoutMsg: 'Bio field was not displayed'
+        })
+        await this.getBioField().clearValue()
+        await this.getBioField().setValue(otherProfile)
+        await this.getUpdateProfileButton().waitForClickable({
+        timeoutMsg: 'Update button was not clicable'
+    })
+    }
+
     public async updateProfile(): Promise<void> {
         await this.getUpdateProfileButton().waitForClickable({
             timeoutMsg: 'Update button was not clicable'
         })
         await this.getUpdateProfileButton().click()
+    }
+
+    private getBioField(): ChainablePromiseElement<WebdriverIO.Element> {
+        return this.browser.$('//*[@id="user_profile_bio"]')
     }
 
     private getUpdateUsernameField(): ChainablePromiseElement<WebdriverIO.Element> {
