@@ -39,6 +39,10 @@ class UserPage {
         await this.getBioLink().click()
     }
 
+    public isEmailDisplayed(): Promise<boolean> {
+        return this.getBio().isDisplayed()
+    }
+
     private getBio(): ChainablePromiseElement<WebdriverIO.Element> {
         return this.browser.$('//div//*[contains(@class,"p-note")]')
     }
@@ -49,6 +53,10 @@ class UserPage {
 
     private getPronouns(): ChainablePromiseElement<WebdriverIO.Element> {
         return this.browser.$('//div//*[contains(@itemprop,"pronouns")]')
+    }
+
+    private getEmail(): ChainablePromiseElement<WebdriverIO.Element> {
+        return this.browser.$('//li//*[contains(@href,"mailto")]')
     }
 
 }
