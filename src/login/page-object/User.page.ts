@@ -8,12 +8,11 @@ class UserPage {
         this.browser = browser
     }
 
-    public async openUser(): Promise<void> {
-        await this.browser.url(this.url)
-    }
-
-    public isDisplayedBio(): Promise<boolean> {
-        return this.getBio().isDisplayed()
+    public async clickableBioLink(): Promise<void> {
+        await this.getBioLink().waitForClickable({
+            timeoutMsg: 'User button in bio was not clicable'
+        })
+        await this.getBioLink().click()
     }
 
     public getBioText(): Promise<string> {
@@ -24,23 +23,16 @@ class UserPage {
         return this.getPronouns().getText()
     }
 
-    // public async clickBio(): Promise<void> {
-    //     await this.getBio().waitForClickable({
-    //         timeoutMsg: 'Bio button was not clicable'
-    //     })
-    //     await this.getBio().click()
-    // }
-
-
-    public async clickableBioLink(): Promise<void> {
-        await this.getBioLink().waitForClickable({
-            timeoutMsg: 'User button in bio was not clicable'
-        })
-        await this.getBioLink().click()
+    public isDisplayedBio(): Promise<boolean> {
+        return this.getBio().isDisplayed()
     }
 
     public isEmailDisplayed(): Promise<boolean> {
         return this.getBio().isDisplayed()
+    }
+
+    public async openUser(): Promise<void> {
+        await this.browser.url(this.url)
     }
 
     private getBio(): ChainablePromiseElement<WebdriverIO.Element> {
@@ -51,12 +43,12 @@ class UserPage {
         return this.browser.$('//div//*[contains(@href,"KonstantinPrik")]')
     }
 
-    private getPronouns(): ChainablePromiseElement<WebdriverIO.Element> {
-        return this.browser.$('//div//*[contains(@itemprop,"pronouns")]')
-    }
-
     private getEmail(): ChainablePromiseElement<WebdriverIO.Element> {
         return this.browser.$('//li//*[contains(@href,"mailto")]')
+    }
+
+    private getPronouns(): ChainablePromiseElement<WebdriverIO.Element> {
+        return this.browser.$('//div//*[contains(@itemprop,"pronouns")]')
     }
 
 }

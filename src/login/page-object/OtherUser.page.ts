@@ -8,26 +8,18 @@ class OtherUserPage {
         this.browser = browser
     }
 
-    public async openOtherUserPage(): Promise<void> {
-        await this.browser.url(this.url)
+    public getNameText(): Promise<string> {
+        return this.getName().getText()
     }
-
-    // public isDisplayedOtherUserName(): Promise<boolean>
 
     public async isDisplayedOtherUserName(): Promise<void> {
         await this.getName().waitForDisplayed({
             timeoutMsg: 'User name was not displayed'
         })
     }
-    // await this.getName().waitForDisplayed({
-    //     timeoutMsg: 'Username field was not displayed'
-    // })
-    // public isDisplayedName(): Promise<boolean> {
-    //     return this.getName().isDisplayed()
-    // }
 
-    public getNameText(): Promise<string> {
-        return this.getName().getText()
+    public async openOtherUserPage(): Promise<void> {
+        await this.browser.url(this.url)
     }
 
     private getName(): ChainablePromiseElement<WebdriverIO.Element> {

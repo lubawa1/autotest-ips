@@ -8,6 +8,10 @@ class EmailPage {
         this.browser = browser
     }
 
+    public isDisplayedUpdateBanner(): Promise<boolean> {
+        return this.getUpdateBanner().isDisplayed()
+    }
+
     public async openEmail(): Promise<void> {
         await this.browser.url(this.url)
     }
@@ -21,16 +25,12 @@ class EmailPage {
         }
     }
 
-    public isDisplayedUpdateBanner(): Promise<boolean> {
-        return this.getUpdateBanner().isDisplayed()
+    private getEmailCheckbox(): ChainablePromiseElement<WebdriverIO.Element> {
+        return this.browser.$('//*[@id="toggle_visibility"]')
     }
 
     private getUpdateBanner(): ChainablePromiseElement<WebdriverIO.Element> {
         return this.browser.$('//main//*[contains(@class,"flash-full")]')
-    }
-
-    private getEmailCheckbox(): ChainablePromiseElement<WebdriverIO.Element> {
-        return this.browser.$('//*[@id="toggle_visibility"]')
     }
 }
 

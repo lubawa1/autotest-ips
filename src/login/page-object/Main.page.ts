@@ -16,18 +16,18 @@ class MainPage {
         await this.browser.url(this.url)
     }
 
-    public async openUserMenu(): Promise<void> {
-        await this.getUserAvatar().waitForClickable({
-            timeoutMsg: 'Avatar was not clicable'
-        })
-        await this.getUserAvatar().click()
-    }
-
     public async openSettingsProfile(): Promise<void> {
         await this.getSettingsButton().waitForClickable({
             timeoutMsg: 'Settings button was not clicable'
         })
         await this.getSettingsButton().click()
+    }
+
+    public async openUserMenu(): Promise<void> {
+        await this.getUserAvatar().waitForClickable({
+            timeoutMsg: 'Avatar was not clicable'
+        })
+        await this.getUserAvatar().click()
     }
 
     private getSettingsButton(): ChainablePromiseElement<WebdriverIO.Element> {
