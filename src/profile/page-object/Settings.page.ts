@@ -66,7 +66,7 @@ class SettingsPage {
         await this.getUpdateProfileButton().click()       
     }
 
-    public async getUpdateBio(username: string): Promise<void> {
+    public async getUpdateBio(): Promise<void> {//убрать неиспользуемый параметр
         await this.getUsernameField().waitForDisplayed({
             timeoutMsg: 'Username field was not displayed'
         })
@@ -84,8 +84,10 @@ class SettingsPage {
         return this.getUpdateAvatarBanner().isDisplayed()
     }
 
-    public isDisplayedErrorBanner(): Promise<boolean> {
-        return this.getErrorBanner().isDisplayed()
+    public async waitDisplayedErrorBanner(): Promise<void> {
+        await this.getErrorBanner().waitForDisplayed({
+            timeoutMsg: 'Save image button was not clicable'
+        })
     }
 
     public isDisplayedPublicProfileLayout(): Promise<boolean> {
@@ -107,27 +109,18 @@ class SettingsPage {
         await this.getSaveButtonImage().click()
     }
 
-    public async showHiddenFileInput(browser: WebdriverIO.Browser): Promise<void> {
-        await browser.execute(() => {
+    public async showHiddenFileInput(): Promise<void> {
+        await this.browser.execute(() => {
             const htmlElement = document.querySelector('[type="file"]') as HTMLElement
             htmlElement.style.cssText = 'display:block !important; opacity: 1; position: inherit;'
         })
-    }
-
-    public async uploadDocxFile(docxPath: string): Promise<void> {
-        await this.getInputDocxFile().waitForExist({
-            timeoutMsg: 'File input field was not exist',
-        })
-        await this.showHiddenFileInput(this.browser)
-        const file: string = await this.browser.uploadFile(docxPath)
-        await this.getInputDocxFile().setValue(file)
     }
 
     public async uploadFile(filePath: string): Promise<void> {
         await this.getInputFile().waitForExist({
             timeoutMsg: 'File input field was not exist',
         })
-        await this.showHiddenFileInput(this.browser)
+        await this.showHiddenFileInput()
         const file: string = await this.browser.uploadFile(filePath)
         await this.getInputFile().setValue(file)
     }
@@ -137,6 +130,14 @@ class SettingsPage {
             timeoutMsg: 'Update button was not clicable'
         })
         await this.getUpdateProfileButton().click()
+    }
+
+    public getNameText(): Promise<string> {
+        return this.getNameField().getText()
+    }
+
+    public async openOtherUserPage(): Promise<void> {
+        await this.browser.url(this.url)
     }
 
     private getBioField(): ChainablePromiseElement<WebdriverIO.Element> {
@@ -151,16 +152,11 @@ class SettingsPage {
         return this.browser.$('//file-attachment//*[contains(@class,"bad-file")]')
     }
 
-    private getInputDocxFile(): ChainablePromiseElement<WebdriverIO.Element> {
-        return this.browser.$('[type="file"]')
-    }
-
     private getInputFile(): ChainablePromiseElement<WebdriverIO.Element> {
         return this.browser.$('[type="file"]')
     }
 
-
-    private getPronounsValueShe(): ChainablePromiseElement<WebdriverIO.Element> {
+    private getPronounsValueShe(): ChainablePromiseElement<WebdriverIO.Element> { 
         return this.browser.$('//select//*[contains(@value,"she/her")]')
     }
 
@@ -200,6 +196,9 @@ class SettingsPage {
         return this.browser.$('//*[@id="user_profile_name"]')
     }
 
+    private getNameField(): ChainablePromiseElement<WebdriverIO.Element> {///getNameField
+        return this.browser.$('//div//*[contains(@class,"p-nickname")]')
+    }
 }
 
 export {
