@@ -1,20 +1,18 @@
+import { LOGIN, PASSWORD, EMAIL } from '../../../credentials'
+
 type UserData = {
     login: string,
     password: string,
-    email?: string
+    email: string
 }
 
-const userData: UserData = {
-    login: 'lubawa1',
-    password: '1996Klomeg9691',
-}
-
-const kek: UserData = {
-    login: 'up',
-    password: '123123',
-    email: '',
+const user: UserData = {
+    login: LOGIN,
+    password: PASSWORD,
+    email: EMAIL,
 }
 
 export {
     UserData,
+    user
 }

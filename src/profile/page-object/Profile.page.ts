@@ -1,7 +1,7 @@
 import { ChainablePromiseElement } from 'webdriverio'
 import { LOGIN } from '../../../credentials'
 
-class ProfilePage {//переимновать в ProfilePage
+class ProfilePage {
     private login = LOGIN
     protected browser: WebdriverIO.Browser
     protected url = `https://github.com/${this.login}`
@@ -11,30 +11,26 @@ class ProfilePage {//переимновать в ProfilePage
         this.login = login
     }
 
-    public  isClicableUserInBio(): Promise<boolean> { //подумать над названием
-        return this.getBioLink().isClickable()
-    }
-
     public getPronounsText(): Promise<string> {
         return this.getUserPronouns().getText()
-    }
-
-    public async waitCropAvatar(): Promise<void> {
-        await this.getCropAvatar().waitForDisplayed({
-            timeoutMsg: 'Crop avatar was not displayed'
-        })
     }
 
     public isEmailDisplayed(): Promise<boolean> {
         return this.getEmail().isDisplayed()
     }
 
-    public async openUser(): Promise<void> {
+    public isClicableUserInBio(): Promise<boolean> {
+        return this.getBioLink().isClickable()
+    }
+
+    public async open(): Promise<void> {
         await this.browser.url(this.url)
     }
 
-    private getUserProfileBio(): ChainablePromiseElement<WebdriverIO.Element> {//переименовать в getUserProfileBio
-        return this.browser.$('//*[contains(@class,"js-profile-editable-area")]')
+    public async waitCropAvatar(): Promise<void> {
+        await this.getCropAvatar().waitForDisplayed({
+            timeoutMsg: 'Crop avatar was not displayed'
+        })
     }
 
     private getBioLink(): ChainablePromiseElement<WebdriverIO.Element> {
@@ -45,11 +41,11 @@ class ProfilePage {//переимновать в ProfilePage
         return this.browser.$('//*[@id="avatar-crop-form"]')
     }
 
-    private getEmail(): ChainablePromiseElement<WebdriverIO.Element> {//если не планируешь использовать, то нужно ето убрать
+    private getEmail(): ChainablePromiseElement<WebdriverIO.Element> {
         return this.browser.$('//li//*[contains(@href,"mailto")]')
     }
 
-    private getUserPronouns(): ChainablePromiseElement<WebdriverIO.Element> {///getUserPronouns
+    private getUserPronouns(): ChainablePromiseElement<WebdriverIO.Element> {
         return this.browser.$('//div//*[contains(@itemprop,"pronouns")]')
     }
 }

@@ -16,10 +16,10 @@ class EmailPage {
         await this.browser.url(this.url)
     }
 
-    public async turnOffEmailCheckbox(): Promise<void> {//turnOff... еще подумать над реализацией
+    public async turnOffEmailCheckbox(): Promise<void> {
         if (await this.getEmailCheckbox().isSelected()) {
             await this.getEmailCheckbox().click()
-        } else {}
+        }
     }
 
     private getEmailCheckbox(): ChainablePromiseElement<WebdriverIO.Element> {

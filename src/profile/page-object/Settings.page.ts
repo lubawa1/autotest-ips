@@ -44,8 +44,8 @@ class SettingsPage {
         await this.getPronounsValueShe().click()
         await this.getUpdateProfileButton().waitForClickable({
             timeoutMsg: 'Update button was not clicable'
-        }) 
-        await this.getUpdateProfileButton().click()       
+        })
+        await this.getUpdateProfileButton().click()
     }
 
     public async changePublicEmail(): Promise<void> {
@@ -53,7 +53,7 @@ class SettingsPage {
             timeoutMsg: 'Email field was not displayed'
         })
         await this.getPublicEmailField().waitForClickable({
-            timeoutMsg: 'Email was not clicable'
+            timeoutMsg: 'Email was not clickable'
         })
         await this.getPublicEmailField().click()
         await this.getEmailValueEmail().waitForDisplayed({
@@ -61,17 +61,17 @@ class SettingsPage {
         })
         await this.getEmailValueEmail().click()
         await this.getUpdateProfileButton().waitForClickable({
-            timeoutMsg: 'Update button was not clicable'
-        }) 
-        await this.getUpdateProfileButton().click()       
+            timeoutMsg: 'Update button was not clickable'
+        })
+        await this.getUpdateProfileButton().click()
     }
 
-    public async getUpdateBio(): Promise<void> {//убрать неиспользуемый параметр
+    public async getUpdateBio(): Promise<void> {
         await this.getUsernameField().waitForDisplayed({
             timeoutMsg: 'Username field was not displayed'
         })
         await this.getUpdateUsernameField().waitForClickable({
-            timeoutMsg: 'Username was not clicable'
+            timeoutMsg: 'Username was not clickable'
         })
         await this.getUpdateUsernameField().click()
     }
@@ -84,10 +84,12 @@ class SettingsPage {
         return this.getUpdateAvatarBanner().isDisplayed()
     }
 
-    public async waitDisplayedErrorBanner(): Promise<void> {
-        await this.getErrorBanner().waitForDisplayed({
-            timeoutMsg: 'Save image button was not clicable'
-        })
+    public isDisplayedErrorBanner(): Promise<boolean> {
+        return this.getErrorBanner().isDisplayed()
+    }
+
+    public async waitErrorBanner(): Promise<void> {
+        await this.getErrorBanner().waitForDisplayed()
     }
 
     public isDisplayedPublicProfileLayout(): Promise<boolean> {
@@ -98,7 +100,11 @@ class SettingsPage {
         return this.getUpdateBanner().isDisplayed()
     }
 
-    public async openSettings(): Promise<void> {
+    public getNameText(): Promise<string> {
+        return this.getNameField().getText()
+    }
+
+    public async open(): Promise<void> {
         await this.browser.url(this.url)
     }
 
@@ -132,14 +138,6 @@ class SettingsPage {
         await this.getUpdateProfileButton().click()
     }
 
-    public getNameText(): Promise<string> {
-        return this.getNameField().getText()
-    }
-
-    public async openOtherUserPage(): Promise<void> {
-        await this.browser.url(this.url)
-    }
-
     private getBioField(): ChainablePromiseElement<WebdriverIO.Element> {
         return this.browser.$('//*[@id="user_profile_bio"]')
     }
@@ -147,7 +145,7 @@ class SettingsPage {
     private getEmailValueEmail(): ChainablePromiseElement<WebdriverIO.Element> {
         return this.browser.$('//select//*[contains(@value,"@")]')
     }
-    
+
     private getErrorBanner(): ChainablePromiseElement<WebdriverIO.Element> {
         return this.browser.$('//file-attachment//*[contains(@class,"bad-file")]')
     }
@@ -156,12 +154,16 @@ class SettingsPage {
         return this.browser.$('[type="file"]')
     }
 
-    private getPronounsValueShe(): ChainablePromiseElement<WebdriverIO.Element> { 
-        return this.browser.$('//select//*[contains(@value,"she/her")]')
+    private getNameField(): ChainablePromiseElement<WebdriverIO.Element> {
+        return this.browser.$('//div//*[contains(@class,"p-nickname")]')
     }
 
     private getPronounsField(): ChainablePromiseElement<WebdriverIO.Element> {
         return this.browser.$('//*[@id="user_profile_pronouns_select"]')
+    }
+
+    private getPronounsValueShe(): ChainablePromiseElement<WebdriverIO.Element> {
+        return this.browser.$('//select//*[contains(@value,"she/her")]')
     }
 
     private getPublicEmailField(): ChainablePromiseElement<WebdriverIO.Element> {
@@ -194,10 +196,6 @@ class SettingsPage {
 
     private getUsernameField(): ChainablePromiseElement<WebdriverIO.Element> {
         return this.browser.$('//*[@id="user_profile_name"]')
-    }
-
-    private getNameField(): ChainablePromiseElement<WebdriverIO.Element> {///getNameField
-        return this.browser.$('//div//*[contains(@class,"p-nickname")]')
     }
 }
 

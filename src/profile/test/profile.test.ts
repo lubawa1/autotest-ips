@@ -4,6 +4,9 @@ import { MainPage } from '../../login/page-object/Main.page'
 import { SettingsPage } from '../page-object/Settings.page'
 import { ProfilePage } from '../page-object/Profile.page'
 import { EmailPage } from '../page-object/Email.page'
+import { createUserModel, UserModel } from '../../users/model/user.model'
+import { user } from '../../users/data/user.data'
+
 
 describe('Login form test', () => {
     let loginPage: LoginPage
@@ -13,6 +16,7 @@ describe('Login form test', () => {
     let emailPage: EmailPage
     const filePath = 'src/files/kitty.jpg'
     const docxPath = 'src/files/test.docx'
+    let userModel: UserModel
 
     before(async () => {
         loginPage = new LoginPage(browser)
@@ -20,16 +24,15 @@ describe('Login form test', () => {
         settingsPage = new SettingsPage(browser)
         profilePage = new ProfilePage(browser)
         emailPage = new EmailPage(browser)
+        userModel = createUserModel(user)
+
+        await loginPage.open()
+        await loginPage.login(userModel)
+        await mainPage.openUserMenu()
     })
 
     beforeEach(async () => {
-        await loginPage.open()
-        await loginPage.login(LOGIN, PASSWORD)
-        await mainPage.openUserMenu()
-        await mainPage.openSettingsProfile()
-        await settingsPage.openSettings()
-
-        expect(await settingsPage.isDisplayedPublicProfileLayout()).toEqual(true)
+        await settingsPage.open()
     })
 
     it('username should be added', async () => {
@@ -42,7 +45,7 @@ describe('Login form test', () => {
     it('@profile should be added to bio', async () => {
         await settingsPage.addOtherProfile('@KonstantinPrik')
         await settingsPage.updateProfile()
-        await profilePage.openUser()
+        await profilePage.open()
 
         expect(await profilePage.isClicableUserInBio()).toEqual(true)
     })
@@ -50,7 +53,7 @@ describe('Login form test', () => {
     it('Pronouns should be changed to `she/her`', async () => {
         await settingsPage.changePronouns()
         await settingsPage.updateProfile()
-        await profilePage.openUser()
+        await profilePage.open()
 
         expect(await profilePage.getPronounsText()).toEqual('she/her')
     })
@@ -65,23 +68,19 @@ describe('Login form test', () => {
 
     it('docx should not be uploaded in profile', async () => {
         await settingsPage.uploadFile(docxPath)
-        await settingsPage.waitDisplayedErrorBanner()
+        await settingsPage.waitErrorBanner()
+
+        expect(await settingsPage.isDisplayedErrorBanner()).toEqual(true)
     })
 
     it('Public email should be active and changed', async () => {
         await emailPage.openEmail()
         await emailPage.turnOffEmailCheckbox()
-        await settingsPage.openSettings()
+        await settingsPage.open()
         await settingsPage.changePublicEmail()
         await settingsPage.updateProfile()
-        await profilePage.openUser()
+        await profilePage.open()
 
         expect(await profilePage.isEmailDisplayed()).toEqual(true)
     })
-
-
-    afterEach(async () => {
-        await browser.reloadSession()
-    })
-
 })
