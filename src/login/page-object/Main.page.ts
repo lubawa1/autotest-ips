@@ -16,6 +16,13 @@ class MainPage {
         await this.browser.url(this.url)
     }
 
+    public async openRepositories(): Promise<void> {
+        await this.getRepositoriesButton().waitForClickable({
+            timeoutMsg: 'Repositories button was not clicable'
+        })
+        await this.getRepositoriesButton().click()
+    }
+
     public async openSettingsProfile(): Promise<void> {
         await this.getSettingsButton().waitForClickable({
             timeoutMsg: 'Settings button was not clicable'
@@ -28,6 +35,10 @@ class MainPage {
             timeoutMsg: 'Avatar was not clicable'
         })
         await this.getUserAvatar().click()
+    }
+
+    private getRepositoriesButton(): ChainablePromiseElement<WebdriverIO.Element> {
+        return this.browser.$('//details-menu//*[contains(@href,"repositories")]')
     }
 
     private getSettingsButton(): ChainablePromiseElement<WebdriverIO.Element> {

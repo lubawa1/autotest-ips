@@ -14,9 +14,6 @@ class SettingsPage {
         })
         await this.getBioField().clearValue()
         await this.getBioField().setValue(otherProfile)
-        await this.getUpdateProfileButton().waitForClickable({
-            timeoutMsg: 'Update button was not clicable'
-        })
     }
 
     public async addUsername(username: string): Promise<void> {
@@ -25,9 +22,6 @@ class SettingsPage {
         })
         await this.getUsernameField().clearValue()
         await this.getUsernameField().setValue(username)
-        await this.getUpdateProfileButton().waitForClickable({
-            timeoutMsg: 'Update button was not clicable'
-        })
     }
 
     public async changePronouns(): Promise<void> {
@@ -42,10 +36,6 @@ class SettingsPage {
             timeoutMsg: 'Pronouns `she` field was not displayed'
         })
         await this.getPronounsValueShe().click()
-        await this.getUpdateProfileButton().waitForClickable({
-            timeoutMsg: 'Update button was not clicable'
-        })
-        await this.getUpdateProfileButton().click()
     }
 
     public async changePublicEmail(): Promise<void> {
@@ -60,20 +50,6 @@ class SettingsPage {
             timeoutMsg: 'Email field was not displayed'
         })
         await this.getEmailValueEmail().click()
-        await this.getUpdateProfileButton().waitForClickable({
-            timeoutMsg: 'Update button was not clickable'
-        })
-        await this.getUpdateProfileButton().click()
-    }
-
-    public async getUpdateBio(): Promise<void> {
-        await this.getUsernameField().waitForDisplayed({
-            timeoutMsg: 'Username field was not displayed'
-        })
-        await this.getUpdateUsernameField().waitForClickable({
-            timeoutMsg: 'Username was not clickable'
-        })
-        await this.getUpdateUsernameField().click()
     }
 
     public getUpdateUsernameText(): Promise<string> {
@@ -100,16 +76,12 @@ class SettingsPage {
         return this.getUpdateBanner().isDisplayed()
     }
 
-    public getNameText(): Promise<string> {
-        return this.getNameField().getText()
-    }
-
     public async open(): Promise<void> {
         await this.browser.url(this.url)
     }
 
     public async saveImage(): Promise<void> {
-        await this.getSaveButtonImage().waitForDisplayed({
+        await this.getSaveButtonImage().waitForClickable({
             timeoutMsg: 'Save image button was not clicable'
         })
         await this.getSaveButtonImage().click()
@@ -152,10 +124,6 @@ class SettingsPage {
 
     private getInputFile(): ChainablePromiseElement<WebdriverIO.Element> {
         return this.browser.$('[type="file"]')
-    }
-
-    private getNameField(): ChainablePromiseElement<WebdriverIO.Element> {
-        return this.browser.$('//div//*[contains(@class,"p-nickname")]')
     }
 
     private getPronounsField(): ChainablePromiseElement<WebdriverIO.Element> {

@@ -9,7 +9,6 @@ import { createUserProfile, ProfileModel } from '../model/profile.model'
 import { profile } from '../data/profile.data'
 import { docxPath } from '../data/invalidProfile.data'
 
-
 describe('Login form test', () => {
     let loginPage: LoginPage
     let mainPage: MainPage
@@ -31,6 +30,7 @@ describe('Login form test', () => {
         await loginPage.open()
         await loginPage.login(userModel)
         await mainPage.openUserMenu()
+        await mainPage.openSettingsProfile()
     })
 
     beforeEach(async () => {
