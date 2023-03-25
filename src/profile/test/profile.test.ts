@@ -60,7 +60,7 @@ describe('Login form test', () => {
         expect(await profilePage.getPronounsText()).toEqual(profileModel.pronouns)
     })
 
-    it('photo should be uploaded in profile', async () => {
+    it('photo should be uploaded to profile', async () => {
         await settingsPage.uploadFile(profileModel.filePath)
         await profilePage.waitCropAvatar()
         await settingsPage.saveImage()
@@ -68,7 +68,7 @@ describe('Login form test', () => {
         expect(await settingsPage.isDisplayedAvatarBanner()).toEqual(true)
     })
 
-    it('docx should not be uploaded in profile', async () => {
+    it('docx should not be uploaded to profile', async () => {
         await settingsPage.uploadFile(docxPath)
         await settingsPage.waitErrorBanner()
 

@@ -6,6 +6,7 @@ import { RepositoriesPage } from '../page-object/Repositories.page'
 import { createIssueModel, IssueModel } from '../model/issue.model'
 import { issue, editIssue } from '../data/issue.data'
 import { IssuesPage } from '../page-object/Issues.page'
+import { attach } from '../data/attach.data'
 
 describe('Issues test', () => {
     let loginPage: LoginPage
@@ -78,6 +79,19 @@ describe('Issues test', () => {
             await issuesPage.waitIssueDisplayed()
 
             expect(await issuesPage.getIssueTitleText()).toEqual(editIssue.title)
+        })
+
+        it('Attach file should be upload to issue', async() => {
+            await issuesPage.searchIssue(editIssue.title)
+            browser.keys('Enter')
+            await issuesPage.openIssue()
+            await issuesPage.attachFile(attach)
+            await browser.pause(10000)
+            await issuesPage.submitComment()
+            // await issuesPage.waitAttachName()
+            await issuesPage.submitComment()
+
+            expect(await issuesPage.getAttachNameText()).toEqual(attach)
         })
     })
 })

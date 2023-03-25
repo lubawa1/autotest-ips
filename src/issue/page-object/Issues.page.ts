@@ -69,7 +69,7 @@ class IssuesPage {
 
     public async searchIssue(title: string): Promise<void> {
         await this.getSearch().waitForDisplayed()
-        await  this.getSearch().clearValue
+        await this.getSearch().clearValue()
         await this.getSearch().setValue(title)
     }
 
@@ -79,6 +79,39 @@ class IssuesPage {
         })
         await this.getFoundIssue().click()
     }
+
+    public async attachFile(attachFile: string): Promise<void> {
+        await this.getAttachFile().waitForExist({
+        timeoutMsg: 'File input field was not displayed',
+    })
+    const attach: string = await this.browser.uploadFile(attachFile)
+    await this.getAttachFile().setValue(attach)
+    }
+
+    public async choosePreviewTab(): Promise<void> {
+        await this.getPreviewTab().waitForClickable()
+        await this.getPreviewTab().click()
+    }
+
+    public async waitAttachName(): Promise<void> {
+        // await this.getAttachName().waitForDisplayed({
+        //     timeoutMsg: 'Attach name was not displayed'
+        // })
+        await this.getPreviewTab().click()
+    }
+
+    public getAttachNameText(): Promise<string> {
+        return this.getAttachName().getText()
+    }
+
+    public async submitComment(): Promise<void> {
+        await this.getSumbitButton().waitForClickable({
+            timeoutMsg: 'Submit button is not clicable'
+        })
+        await this.getSumbitButton().click()
+    }
+
+
 
     private getCreateIssueButton(): ChainablePromiseElement<WebdriverIO.Element> {
         return this.browser.$('//turbo-frame//*[contains(@data-hotkey,"c")]')
@@ -96,9 +129,9 @@ class IssuesPage {
         return this.browser.$('//div//*[contains(@class,"btn-primary btn ml-2")]')
     }
 
-    private getIssue(): ChainablePromiseElement<WebdriverIO.Element> {
-        return this.browser.$('//*[@id="show_issue"]')
-    }
+    // private getIssue(): ChainablePromiseElement<WebdriverIO.Element> {
+    //     return this.browser.$('//*[@id="show_issue"]')
+    // }
 
     private getIssueTitle(): ChainablePromiseElement<WebdriverIO.Element> {
         return this.browser.$('//div//*[contains(@class,"js-issue-title markdown-title")]')
@@ -119,6 +152,27 @@ class IssuesPage {
     private getFoundIssue(): ChainablePromiseElement<WebdriverIO.Element> {
         return this.browser.$('//div//*[contains(@data-hovercard-type,"issue")]')
     }
+
+    private getAttachFile(): ChainablePromiseElement<WebdriverIO.Element> {
+        return this.browser.$('//*[@id="fc-new_comment_field"]')
+    }
+
+    private getPreviewTab(): ChainablePromiseElement<WebdriverIO.Element> {
+        return this.browser.$('//tab-container//*[contains(@class,"preview-tab")]')
+    }
+
+    // private getAttachName(): ChainablePromiseElement<WebdriverIO.Element> {
+    //     return this.browser.$('//*[contains(@href,"files")]')
+    // }
+
+    private getSumbitButton(): ChainablePromiseElement<WebdriverIO.Element> {
+        return this.browser.$('//div//*[contains(@class,"color-bg-subtle ml-1")]')
+    }
+
+    private getAttachName(): ChainablePromiseElement<WebdriverIO.Element> {
+        return this.browser.$('//table//*[contains(@href,"files")]')
+    }
+
 }
 
 export {
