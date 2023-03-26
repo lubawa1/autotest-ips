@@ -1,20 +1,20 @@
 type IssueData = {
     title: string,
-    body: string,
+    comment: string,
 }
 
 const issue: IssueData = {
     title: 'Issue 1',
-    body: '@KonstantinPrik',
+    comment: 'issue 1 comment',
 }
 
-const editIssue: IssueData = {
-    title: 'New issue 1',
-    body: 'Edit issue 1'
+const issueComment: IssueData = {
+    title: 'Issue has a comment',
+    comment: 'comment',
 }
 
 export {
     IssueData,
     issue,
-    editIssue
+    issueComment
 }

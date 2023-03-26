@@ -47,8 +47,7 @@ class ProfilePage {
 
     private getUserPronouns(): ChainablePromiseElement<WebdriverIO.Element> {
         return this.browser.$('//div//*[contains(@itemprop,"pronouns")]')
-    }
-}
+    }}
 
 export {
     ProfilePage,

@@ -17,7 +17,6 @@ describe('Login form test', () => {
     let emailPage: EmailPage
     const userModel: UserModel = createUserModel(user)
     const profileModel: ProfileModel = createUserProfile(profile)
-    //    let userModel: UserModel
 
     before(async () => {
         loginPage = new LoginPage(browser)
@@ -25,7 +24,6 @@ describe('Login form test', () => {
         settingsPage = new SettingsPage(browser)
         profilePage = new ProfilePage(browser)
         emailPage = new EmailPage(browser)
-        //        userModel = createUserModel(user)
 
         await loginPage.open()
         await loginPage.login(userModel)
