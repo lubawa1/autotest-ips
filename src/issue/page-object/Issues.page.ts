@@ -59,7 +59,7 @@ class IssuesPage {
         })
         await this.getEditButton().click()
     }
-    
+
     public async updateIssue(): Promise<void> {
         await this.getUpdateButton().waitForClickable({
             timeoutMsg: 'Submit button was not clicable'
@@ -73,32 +73,23 @@ class IssuesPage {
         await this.getSearch().setValue(title)
     }
 
-    // public async openIssue(): Promise<void> {
-    //     await this.getFoundIssue().waitForDisplayed({
-    //         timeoutMsg: 'Issue was not displayed'
-    //     })
-    //     await this.getFoundIssue().click()
-    // }
+    public getFoundIssueName(): Promise<string> {
+        return this.getFoundIssue().getText()
+    }
+
+    public async waitFoundIssue(): Promise<void> {
+        await this.getFoundIssue().waitForDisplayed({
+            timeoutMsg: 'Issue was not displayed'
+        })
+    }
 
     public async attachFile(attachFile: string): Promise<void> {
         await this.getAttachFile().waitForExist({
-        timeoutMsg: 'File input field was not displayed',
-    })
-    const attach: string = await this.browser.uploadFile(attachFile)
-    await this.getAttachFile().setValue(attach)
+            timeoutMsg: 'File input field was not displayed',
+        })
+        const attach: string = await this.browser.uploadFile(attachFile)
+        await this.getAttachFile().setValue(attach)
     }
-
-    // public async choosePreviewTab(): Promise<void> {
-    //     await this.getPreviewTab().waitForClickable()
-    //     await this.getPreviewTab().click()
-    // }
-
-    // public async waitAttachName(): Promise<void> {
-    //     // await this.getAttachName().waitForDisplayed({
-    //     //     timeoutMsg: 'Attach name was not displayed'
-    //     // })
-    //     await this.getPreviewTab().click()
-    // }
 
     public getAttachNameText(): Promise<string> {
         return this.getAttachName().getText()
@@ -141,7 +132,21 @@ class IssuesPage {
         await this.getOpenButton().waitForDisplayed({
             timeoutMsg: 'Reopen button was not displayed'
         })
+    }
 
+    public async closeIssueStatus(): Promise<void> {
+        await this.getReaconCloseButtonList().waitForClickable()
+        await this.getReaconCloseButtonList().click()
+        await this.getReasonAsNotPlanned().waitForDisplayed({
+            timeoutMsg: 'Reason `as not planned` was not displayed'
+        })
+        await this.getReasonAsNotPlanned().click()
+        await this.getCloseButton().click()
+        await this.getCloseIssue().waitForDisplayed()
+    }
+
+    public isDisplayedCloseStatusIssue(): Promise<boolean> {
+        return this.getCloseIssue().isDisplayed()
     }
 
     public isDisplayedReopenButton(): Promise<boolean> {
@@ -179,7 +184,7 @@ class IssuesPage {
     public getPinIssueText(): Promise<string> {
         return this.getPinIssue().getText()
     }
-    
+
 
 
 
@@ -221,9 +226,9 @@ class IssuesPage {
     }
 
 
-    // private getFoundIssue(): ChainablePromiseElement<WebdriverIO.Element> {
-    //     return this.browser.$('//div//*[contains(@data-hovercard-type,"issue")]')
-    // }
+    private getFoundIssue(): ChainablePromiseElement<WebdriverIO.Element> {
+        return this.browser.$('//div//*[contains(@data-hovercard-type,"issue")]')
+    }
 
     private getAttachFile(): ChainablePromiseElement<WebdriverIO.Element> {
         return this.browser.$('//*[@id="fc-new_comment_field"]')
@@ -275,6 +280,18 @@ class IssuesPage {
 
     private getCloseButton(): ChainablePromiseElement<WebdriverIO.Element> {
         return this.browser.$('//*[@name="comment_and_close"]')
+    }
+
+    private getReaconCloseButtonList(): ChainablePromiseElement<WebdriverIO.Element> {
+        return this.browser.$('//div//*[contains(@aria-label,"Select close issue reason")]')
+    }
+
+    private getReasonAsNotPlanned(): ChainablePromiseElement<WebdriverIO.Element> {
+        return this.browser.$('//div//*[contains(@class,"octicon-skip color-fg-muted")]')
+    }
+
+    private getCloseIssue(): ChainablePromiseElement<WebdriverIO.Element> {
+        return this.browser.$('//div//*[contains(@class,"octicon-skip color-fg-inherit")]')
     }
 
     private getOpenButton(): ChainablePromiseElement<WebdriverIO.Element> {

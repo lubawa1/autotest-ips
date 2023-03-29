@@ -6,6 +6,8 @@ const issueAttach = 'Issue has an attach'
 const issueCommentLock = 'Comment lock'
 const issueClose = 'Issue close'
 const issueDelete = 'Issue delete'
+const issueSearch = 'Issue search'
+const issueCloseStatus = 'Issue delete status'
 
 export {
     attach,
@@ -15,5 +17,7 @@ export {
     issueEdit,
     issueCommentLock,
     issueClose,
-    issueDelete
+    issueDelete,
+    issueSearch,
+    issueCloseStatus
 }

@@ -5,7 +5,7 @@ import { RepositoriesPage } from '../page-object/Repositories.page'
 import { createIssueModel, IssueModel } from '../model/issue.model'
 import { issue, issueComment } from '../data/issue.data'
 import { IssuesPage } from '../page-object/Issues.page'
-import { attach, attachName, issueAttach, issueClose, issueCommentLock, issueDelete, issueEdit, issueNewTitle } from '../data/attach.data'
+import { attach, attachName, issueAttach, issueClose, issueCloseStatus, issueCommentLock, issueDelete, issueEdit, issueNewTitle, issueSearch } from '../data/attach.data'
 
 describe('Issues test', () => {
     let loginPage: LoginPage
@@ -91,7 +91,7 @@ describe('Issues test', () => {
             expect(await issuesPage.isDisplayedReopenButton()).toEqual(true)
         })
 
-        it('Issue should be deleted', async() => {
+        it('Issue should be deleted', async () => {
             await issuesPage.createNewIssue()
             await issuesPage.addIssueTitle(issueDelete)
             await issuesPage.createIssue()
@@ -103,16 +103,7 @@ describe('Issues test', () => {
             expect(await issuesPage.isNoResultIconDesplayed()).toEqual(true)
         })
 
-        // it('Comment should be deleted', async() => {
-        //     await issuesPage.createNewIssue()
-        //     await issuesPage.addIssueTitle(issueComment.title)
-        //     await issuesPage.createIssue()
-        //     await issuesPage.addIssueComment(issueComment.comment)
-        //     await issuesPage.submitComment()
-
-        // })
-
-        it('Issue should be pined', async() => {
+        it('Issue should be pined', async () => {
             await issuesPage.createNewIssue()
             await issuesPage.addIssueTitle(issue.title)
             await issuesPage.createIssue()
@@ -121,6 +112,30 @@ describe('Issues test', () => {
             await issuesPage.waitPinIssuesList()
 
             expect(await issuesPage.getPinIssueText()).toEqual(issue.title)
+        })
+
+        it('Search. Issue should be found at list', async () => {
+            await issuesPage.createNewIssue()
+            await issuesPage.addIssueTitle(issueSearch)
+            await issuesPage.createIssue()
+            await issuesPage.open()
+            await issuesPage.searchIssue(`${issueSearch} is:closed`)
+            await browser.keys('Enter')
+            await issuesPage.waitNoResultIconDesplayed()
+            await issuesPage.searchIssue(`${issueSearch} is:open`)
+            await browser.keys('Enter')
+            await issuesPage.waitFoundIssue()
+
+            expect(await issuesPage.getFoundIssueName()).toEqual(issueSearch)
+        })
+
+        it('Issue should be closed this status `as not planned`', async () => {
+            await issuesPage.createNewIssue()
+            await issuesPage.addIssueTitle(issueCloseStatus)
+            await issuesPage.createIssue()
+            await issuesPage.closeIssueStatus()
+
+            expect(await issuesPage.isDisplayedCloseStatusIssue()).toEqual(true)
         })
     })
 })
