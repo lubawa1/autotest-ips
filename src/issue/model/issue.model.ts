@@ -2,7 +2,7 @@ import { IssueData } from "../data/issue.data"
 
 
 type IssueModel = {
-    title: number,
+    title: string,
     body: string,
 }
 
