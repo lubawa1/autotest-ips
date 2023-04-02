@@ -1,20 +1,24 @@
+import { getRandomString } from '../../random.data'
+
 type IssueData = {
     title: string,
-    comment: string,
+    body?: string,
+    filePath?: string,
+    fileName?: string,
+    comment?: string,
+    status?: string,
 }
 
 const issue: IssueData = {
-    title: 'Issue 1',
-    comment: 'issue 1 comment',
-}
-
-const issueComment: IssueData = {
-    title: 'Issue has a comment',
-    comment: 'comment',
+    title: `Issue-${getRandomString(6)}`,
+    body: `Issue body-${getRandomString(7)}`,
+    filePath: `src/files/test.docx`,
+    fileName: `test.docx`,
+    comment: `Issue comment-${getRandomString(8)}`,
+    status: `is:open`,
 }
 
 export {
     IssueData,
     issue,
-    issueComment
 }

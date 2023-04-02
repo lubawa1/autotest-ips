@@ -3,11 +3,9 @@ import { MainPage } from '../../login/page-object/Main.page'
 import { SettingsPage } from '../page-object/Settings.page'
 import { ProfilePage } from '../page-object/Profile.page'
 import { EmailPage } from '../page-object/Email.page'
-import { createUserModel, UserModel } from '../../users/model/user.model'
+// import { createUserModel, UserModel } from '../../users/model/user.model'
 import { user } from '../../users/data/user.data'
-import { createUserProfile, ProfileModel } from '../model/profile.model'
-import { profile } from '../data/profile.data'
-import { docxPath } from '../data/invalidProfile.data'
+import { invalidPath } from '../../users/data/invalidUser.data'
 
 describe('Login form test', () => {
     let loginPage: LoginPage
@@ -15,8 +13,7 @@ describe('Login form test', () => {
     let settingsPage: SettingsPage
     let profilePage: ProfilePage
     let emailPage: EmailPage
-    const userModel: UserModel = createUserModel(user)
-    const profileModel: ProfileModel = createUserProfile(profile)
+    // const userModel: UserModel = createUserModel(user)
 
     before(async () => {
         loginPage = new LoginPage(browser)
@@ -26,7 +23,7 @@ describe('Login form test', () => {
         emailPage = new EmailPage(browser)
 
         await loginPage.open()
-        await loginPage.login(userModel)
+        await loginPage.login(user)
         await mainPage.openUserMenu()
         await mainPage.openSettingsProfile()
     })
@@ -36,14 +33,14 @@ describe('Login form test', () => {
     })
 
     it('username should be added', async () => {
-        await settingsPage.addUsername(profileModel.name)
+        await settingsPage.addUsername(user.name!)
         await settingsPage.updateProfile()
 
-        expect(await settingsPage.getUpdateUsernameText()).toEqual(profileModel.name)
+        expect(await settingsPage.getUpdateUsernameText()).toEqual(user.name!)
     })
 
     it('@profile should be added to bio', async () => {
-        await settingsPage.addOtherProfile(profileModel.bio)
+        await settingsPage.addOtherProfile(user.bio!)
         await settingsPage.updateProfile()
         await profilePage.open()
 
@@ -55,11 +52,11 @@ describe('Login form test', () => {
         await settingsPage.updateProfile()
         await profilePage.open()
 
-        expect(await profilePage.getPronounsText()).toEqual(profileModel.pronouns)
+        expect(await profilePage.getPronounsText()).toEqual(user.pronouns!)
     })
 
     it('photo should be uploaded to profile', async () => {
-        await settingsPage.uploadFile(profileModel.filePath)
+        await settingsPage.uploadFile(user.filePath!)
         await profilePage.waitCropAvatar()
         await settingsPage.saveImage()
 
@@ -67,7 +64,7 @@ describe('Login form test', () => {
     })
 
     it('docx should not be uploaded to profile', async () => {
-        await settingsPage.uploadFile(docxPath)
+        await settingsPage.uploadFile(invalidPath)
         await settingsPage.waitErrorBanner()
 
         expect(await settingsPage.isDisplayedErrorBanner()).toEqual(true)

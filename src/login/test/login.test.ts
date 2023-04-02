@@ -19,14 +19,13 @@ describe('Login form test', () => {
     })
 
     it('user should be log in with correct login', async () => {
-        await loginPage.login(userModel)
+        await loginPage.login(user)
         await mainPage.openUserMenu()
-
         expect(await mainPage.getUserLoginText()).toEqual(userModel.login)
     })
 
     it('user should be log in with correct email', async () => {
-        await loginPage.setEmail(userModel.email)
+        await loginPage.setEmail(userModel.email!)
         await loginPage.setPassword(userModel.password)
         await loginPage.submitForm()
         await mainPage.openUserMenu()
