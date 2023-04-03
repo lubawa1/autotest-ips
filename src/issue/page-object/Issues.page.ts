@@ -1,9 +1,8 @@
 import { ChainablePromiseElement } from 'webdriverio'
-import { user } from '../../users/data/user.data'
 
 class IssuesPage {
     protected browser: WebdriverIO.Browser
-    protected url = `https://github.com/${user.login}/autotest-ips/issues`
+    protected url = `https://github.com/lubawa1/autotest-ips/issues`
 
     constructor(browser: WebdriverIO.Browser) {
         this.browser = browser
@@ -134,7 +133,12 @@ class IssuesPage {
         await this.browser.url(this.url)
     }
 
-    public async PinIssue(): Promise<void> {
+    public async openIssue(): Promise<void> {
+        await this.getFoundIssue().waitForClickable()
+        await this.getFoundIssue().click()
+    }
+
+    public async pinIssue(): Promise<void> {
         await this.getPinIcon().click()
     }
 
@@ -310,3 +314,5 @@ class IssuesPage {
 export {
     IssuesPage
 }
+
+

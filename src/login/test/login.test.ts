@@ -1,13 +1,16 @@
 import { LoginPage } from '../page-object/Login.page'
 import { MainPage } from '../page-object/Main.page'
 import { createUserModel, UserModel } from '../../users/model/user.model'
-import { user } from '../../users/data/user.data'
 import { invalidLogin, invalidPassword } from '../../users/data/invalidUser.data'
+import { createUserData } from '../../users/data/user.data'
+
+const TEST_MASK = 'user-test'
+
 
 describe('Login form test', () => {
     let loginPage: LoginPage
     let mainPage: MainPage
-    const userModel: UserModel = createUserModel(user)
+    const userModel: UserModel = createUserModel(createUserData(TEST_MASK))
 
     before(async () => {
         loginPage = new LoginPage(browser)
@@ -19,7 +22,7 @@ describe('Login form test', () => {
     })
 
     it('user should be log in with correct login', async () => {
-        await loginPage.login(user)
+        await loginPage.login(userModel)
         await mainPage.openUserMenu()
         expect(await mainPage.getUserLoginText()).toEqual(userModel.login)
     })

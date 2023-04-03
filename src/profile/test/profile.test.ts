@@ -3,9 +3,11 @@ import { MainPage } from '../../login/page-object/Main.page'
 import { SettingsPage } from '../page-object/Settings.page'
 import { ProfilePage } from '../page-object/Profile.page'
 import { EmailPage } from '../page-object/Email.page'
-// import { createUserModel, UserModel } from '../../users/model/user.model'
-import { user } from '../../users/data/user.data'
 import { invalidPath } from '../../users/data/invalidUser.data'
+import { createUserModel, UserModel } from '../../users/model/user.model'
+import { createUserData } from '../../users/data/user.data'
+
+const TEST_MASK = 'issue-test'
 
 describe('Login form test', () => {
     let loginPage: LoginPage
@@ -13,7 +15,8 @@ describe('Login form test', () => {
     let settingsPage: SettingsPage
     let profilePage: ProfilePage
     let emailPage: EmailPage
-    // const userModel: UserModel = createUserModel(user)
+    const user: UserModel = createUserModel(createUserData(TEST_MASK))
+
 
     before(async () => {
         loginPage = new LoginPage(browser)

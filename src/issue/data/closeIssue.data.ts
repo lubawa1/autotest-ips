@@ -1,5 +1,8 @@
-const statusClose = 'is:closed'
+enum Status { 
+    IS_OPEN = 'is:open',
+    IS_CLOSED = 'is:closed'
+}
 
 export {
-    statusClose,
+    Status
 }

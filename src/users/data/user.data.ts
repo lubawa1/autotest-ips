@@ -11,17 +11,19 @@ type UserData = {
     filePath?: string,
 }
 
-const user: UserData = {
-    login: LOGIN,
-    password: PASSWORD,
-    email: EMAIL,
-    name: `user-${getRandomString(6)}`,
-    bio: `@KonstantinPrik`,
-    pronouns: `she/her`,
-    filePath: `src/files/kitty.jpg`,
+function createUserData(mask: string): UserData {
+    return {
+        login: LOGIN,
+        password: PASSWORD,
+        email: EMAIL,
+        name: `${mask}-user-${getRandomString(6)}`,
+        bio: `@KonstantinPrik`,
+        pronouns: `she/her`,
+        filePath: `src/files/kitty.jpg`,
+    }
 }
 
 export {
     UserData,
-    user,
+    createUserData,
 }
