@@ -30,6 +30,7 @@ class IssuesPage {
         })
         const attach: string = await this.browser.uploadFile(attachFile)
         await this.getAttachFile().setValue(attach)
+        await browser.pause(3000)
     }
 
     public async closeIssue(): Promise<void> {
@@ -133,6 +134,14 @@ class IssuesPage {
         await this.browser.url(this.url)
     }
 
+    public async openCreatedIssue(title: string): Promise<void> {
+        await this.open()
+        await this.searchIssue(title)
+        await browser.keys('Enter')
+        await this.openIssue()
+        await browser.pause(2000)
+    }
+
     public async openIssue(): Promise<void> {
         await this.getFoundIssue().waitForClickable()
         await this.getFoundIssue().click()
@@ -146,6 +155,7 @@ class IssuesPage {
         await this.getSearch().waitForDisplayed()
         await this.getSearch().clearValue()
         await this.getSearch().setValue(title)
+        await browser.keys('Enter')
     }
 
     public async submitComment(): Promise<void> {

@@ -1,4 +1,4 @@
-export const config: WebdriverIO.Config = {   
+export const config: WebdriverIO.Config = {
     autoCompileOpts: {
         autoCompile: true,
         tsNodeOpts: {
@@ -20,10 +20,21 @@ export const config: WebdriverIO.Config = {
     connectionRetryTimeout: 60000,
     connectionRetryCount: 3,
     services: ['chromedriver'],
-    reporters: ['spec'],
+    reporters: ['spec', ['allure', {
+        outputDir: 'allure-results',
+        disableWebdriverStepsReporting: true,
+    }],
+    ],
     framework: 'mocha',
     mochaOpts: {
         ui: 'bdd',
         timeout: 60000
     },
+    afterTest: async function (
+        test: unknown,
+        context: unknown,
+        result: { error?: unknown, duration: unknown, passed: unknown }
+    ) {
+        await browser.takeScreenshot()
+    }
 }

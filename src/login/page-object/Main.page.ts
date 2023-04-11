@@ -1,4 +1,5 @@
 import { ChainablePromiseElement } from 'webdriverio'
+import { Reporter } from '../../common/reporter/Reporter'
 
 class MainPage {
     protected browser: WebdriverIO.Browser
@@ -9,6 +10,7 @@ class MainPage {
     }
 
     public getUserLoginText(): Promise<string> {
+        Reporter.addStep('Получить login')
         return this.getUserLogin().getText()
     }
 

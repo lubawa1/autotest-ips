@@ -10,6 +10,10 @@ type IssueData = {
     status?: Status,
 }
 
+type EmptyIssueData = {
+    title: null,
+}
+
 function createIssueData(mask: string): IssueData {
     return {
         title: `${mask}-Issue-${getRandomString(6)}`,
@@ -21,7 +25,13 @@ function createIssueData(mask: string): IssueData {
     }
 }
 
+const emptyIssue: EmptyIssueData = {
+        title: null,
+    }
+
 export {
     IssueData,
     createIssueData,
+    EmptyIssueData,
+    emptyIssue,
 }

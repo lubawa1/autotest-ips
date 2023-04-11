@@ -1,4 +1,4 @@
-import { IssueData } from "../data/issue.data"
+import { EmptyIssueData, IssueData } from "../data/issue.data"
 
 type IssueModel = {
     title: string,
@@ -9,6 +9,10 @@ type IssueModel = {
     status?: string,
 }
 
+type EmptyIssueModel = {
+    title: null,
+}
+
 function createIssueModel(data: IssueData): IssueModel {
     return {
         title: data.title,
@@ -17,6 +21,12 @@ function createIssueModel(data: IssueData): IssueModel {
         fileName: data.fileName,
         comment: data.comment,
         status: data.status,
+    }
+}
+
+function createEmptyModel(data: EmptyIssueData): EmptyIssueModel {
+    return {
+        title: data.title,
     }
 }
 

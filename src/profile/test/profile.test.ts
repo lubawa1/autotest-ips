@@ -5,7 +5,8 @@ import { ProfilePage } from '../page-object/Profile.page'
 import { EmailPage } from '../page-object/Email.page'
 import { invalidPath } from '../../users/data/invalidUser.data'
 import { createUserModel, UserModel } from '../../users/model/user.model'
-import { createUserData } from '../../users/data/user.data'
+import { createUserData, emptyData } from '../../users/data/user.data'
+import { UserAPIService } from '../../../common/api/api-service/UserAPISersice'
 
 const TEST_MASK = 'issue-test'
 
@@ -16,7 +17,7 @@ describe('Login form test', () => {
     let profilePage: ProfilePage
     let emailPage: EmailPage
     const user: UserModel = createUserModel(createUserData(TEST_MASK))
-
+    const emptyModel: UserModel = createUserModel(emptyData)
 
     before(async () => {
         loginPage = new LoginPage(browser)
@@ -33,6 +34,7 @@ describe('Login form test', () => {
 
     beforeEach(async () => {
         await settingsPage.open()
+        await UserAPIService.updateAuthentificatedUser(emptyModel)
     })
 
     it('username should be added', async () => {
@@ -82,5 +84,9 @@ describe('Login form test', () => {
         await profilePage.open()
 
         expect(await profilePage.isEmailDisplayed()).toEqual(true)
+    })
+
+    afterEach(async () => {
+        await UserAPIService.updateAuthentificatedUser(emptyModel)
     })
 })

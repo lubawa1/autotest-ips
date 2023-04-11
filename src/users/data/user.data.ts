@@ -23,7 +23,15 @@ function createUserData(mask: string): UserData {
     }
 }
 
+const emptyData: UserData = {
+    login: LOGIN,
+    password: PASSWORD,
+    name: '',
+    bio: '',
+}
+
 export {
     UserData,
     createUserData,
+    emptyData,
 }
